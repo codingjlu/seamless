@@ -61,6 +61,10 @@ function App() {
       )
   }, [])
 
+  useEffect(() => {
+    window.umami.track(`Step ${step}`)
+  }, [step])
+
   return (
     <Wrapper ref={animateParent}>
       {dead ? (
