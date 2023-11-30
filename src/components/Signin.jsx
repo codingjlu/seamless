@@ -60,7 +60,7 @@ export default function Signin({ state, die }) {
   return (
     <Wrapper>
       {success ? (
-        <Test die={die} />
+        <Test name={state.name} die={die} />
       ) : (
         <>
           <h1>
