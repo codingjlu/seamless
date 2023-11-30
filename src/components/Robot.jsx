@@ -1,7 +1,7 @@
 import styled from "styled-components"
 import Button from "./Button"
 import Input from "./Input"
-import { useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { useAutoAnimate } from "@formkit/auto-animate/react"
 import { useInterval } from "./hooks"
 
@@ -84,9 +84,16 @@ function TheFlip({ done }) {
 function TheDodge({ done }) {
   const timeout = useRef(null)
   const [pos, setPos] = useState({})
+  const buttonRef = useRef(null)
+  const coords = useRef(null)
+
+  useEffect(() => {
+    coords.current = buttonRef.current.getBoundingClientRect()
+  }, [pos])
 
   return (
     <Button
+      ref={buttonRef}
       style={{
         position: "fixed",
         top: pos.y,
@@ -97,6 +104,7 @@ function TheDodge({ done }) {
       onClick={done}
       tabIndex={-1}
       onMouseOver={() => {
+        if (!("x" in pos)) setPos({ x: coords.current.x, y: coords.current.y })
         clearTimeout(timeout.current)
         timeout.current = setTimeout(
           () =>

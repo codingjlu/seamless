@@ -51,10 +51,14 @@ function App() {
   }
 
   useEffect(() => {
-    toast(
-      "Welcome to Seamless, you'll never find a more seamless interaction. Have fun!"
-    )
-    toast("Please note that using a touchscreen will ruin the experience.")
+    const isTouchscreen =
+      "ontouchstart" in window ||
+      navigator.maxTouchPoints > 0 ||
+      navigator.msMaxTouchPoints > 0
+    if (isTouchscreen)
+      alert(
+        "Thanks for visiting, but using Seamless with a touchscreen will ruin the experience. Please switch to another device."
+      )
   }, [])
 
   return (
