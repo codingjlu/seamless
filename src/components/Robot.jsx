@@ -66,7 +66,8 @@ function TheFlip({ done }) {
         onClick={() =>
           ++failures.current === 5
             ? (alert("BLOCKED - Reason: bot detected"),
-              (document.body.innerHTML = "user blocked."))
+              (document.body.innerHTML =
+                "<pre>User blocked [REASON: failure to posess intelligence]</pre>"))
             : alert(
                 `Failed ${failures.current} times (${Math.round(
                   100 * (failures.current / 5)
@@ -126,7 +127,8 @@ function TheArithmetic({ done }) {
     if (value == numbers[0] * numbers[1]) return done()
     if (++failures.current === 5) {
       alert("BLOCKED - Reason: bot detected")
-      document.body.innerHTML = "user blocked."
+      document.body.innerHTML =
+        "<pre>User blocked [REASON: slow reflexes]</pre>"
     } else
       alert(
         `Failed ${failures.current} times (${Math.round(
