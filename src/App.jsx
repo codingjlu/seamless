@@ -15,6 +15,11 @@ import Verification from "./components/Verification"
 import Signin from "./components/Signin"
 import Dead from "./components/Dead"
 
+const track = (() => {
+  const called = new Set()
+  return (code) => !called.has(code) && window.umami?.track?.(code)
+})()
+
 const Wrapper = styled.div`
   position: relative;
   width: 30vw;
@@ -61,12 +66,17 @@ function App() {
       )
   }, [])
 
+  useEffect(() => {
+    track(`Step ${step}`)
+  }, [step])
+
   return (
     <Wrapper ref={animateParent}>
       {dead ? (
-        (enable(false), (<Dead state={state} />))
+        (enable(false), track("Death"), (<Dead state={state} />))
       ) : created ? (
-        <Signin state={state} die={() => setDead(true)} />
+        (track("Created account"),
+        (<Signin state={state} die={() => setDead(true)} />))
       ) : (
         <>
           <Progress steps={steps} step={step} />
